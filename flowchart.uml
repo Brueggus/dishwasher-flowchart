@@ -1,0 +1,59 @@
+@startuml
+
+skinparam nodesep 80
+skinparam ranksep 20
+
+title Flowchart für die Büro-Spülmaschine
+
+legend
+    Quelle: github.com/rweisleder/dishwasher-flowchart
+    Idee: Magdalena Böttger
+endlegend
+
+note right: Ich habe dreckiges Geschirr.
+(*) --> if "Sind Krümel drauf\noder ist noch was\nin der Tasse?" then
+    -right->[Ja] "Weg mit den Resten!" as throw_away_leftovers
+else
+    -->[Nein] "Super! Stelle es in\ndie Spülmaschine." as into_dishwasher
+endif
+
+throw_away_leftovers -->[Schon besser] into_dishwasher
+into_dishwasher -->[Erledigt] "Du bekommst\n5 Punkte." as points_for_into_dishwasher
+
+points_for_into_dishwasher --> if "Möchtest du\nExtrapunkte verdienen?" then
+    -->[Gerne] "Finde weiteres\nschmutziges Geschirr\nund stelle es in\ndie Spülmaschine." as find_more_dirty_dishes
+else
+    -->[Nicht jetzt] "Schönen Tag noch!" as bye
+endif
+
+find_more_dirty_dishes -->[Keins zu sehen] bye
+find_more_dirty_dishes -->[Erledigt] "Klasse! Du bekommst\n10 Extrapunkte." as points_for_more_dirty_dishes
+
+into_dishwasher -right->[Geht nicht.\nSie ist voll.] if "Sind die Sachen\ndarin sauber oder\nschmutzig?" then
+    -->[Schmutzig] "Schalte die\nSpülmaschine an." as start_dishwasher
+else
+    -right->[Sauber] "Räume die Maschine\naus und sortiere alle\nSachen in die Schränke." as purge_dishwasher
+endif
+
+start_dishwasher -->[Das war\neinfach] "Fantastisch!\nDu bekommst\n15 Punkte." as points_for_start_dishwasher
+
+start_dishwasher -->[Ich weiß\nnicht wie] "Frage jemanden\nund lerne,\nwie es geht." as learn_to_start_dishwasher
+learn_to_start_dishwasher -->[Level up!] start_dishwasher
+
+purge_dishwasher -->[Ok] "Toll gemacht!\nDu bekommst\n15 Punkte." as points_for_purge_dishwasher
+points_for_purge_dishwasher -->[Juhu!] "Stelle dein Geschirr\nstolz in die jetzt\nleere Spülmaschine." as into_empty_dishwasher
+into_empty_dishwasher -->[Erledigt] "Du bekommst\n5 Punkte." as points_for_into_empty_dishwasher
+
+purge_dishwasher -right->[Was?!] if "Hast du Zweifel?" then
+    -up->[Das dauert doch ewig.] "Ja. Deshalb soll jeder\nmithelfen. Es sind nur\n10 Minuten und zählt\nals Arbeitszeit." as takes_forever
+else
+    -right->[Wichtiger Termin\nin einer Minute.] "Wirklich? Ok, dann\nlass ausnahmsweise\ndeine dreckigen\nSachen rumstehen." as important_meeting
+else
+    -->[Dafür bin ich\nzu gut bezahlt.] "Nein, bist du nicht.\nHier geht es\nnicht um Geld." as paid_too_well
+endif
+
+takes_forever --> purge_dishwasher
+important_meeting --> "Du verlierst 20 Punkte.\nVerdiene nächstes Mal\nExtrapunkte!" as points_for_important_meeting
+paid_too_well --> purge_dishwasher
+
+@enduml
